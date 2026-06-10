@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-emerald-brand: #10B981;
+  --color-emerald-brand-light: #D1FAE5;
+  --color-emerald-brand-dark: #065F46;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* PWA standalone mode — hide browser chrome artifacts */
+@media all and (display-mode: standalone) {
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    overscroll-behavior: none;
+  }
+}
+
+/* Safe area for notched devices */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+
+/* Numeric inputs — no spinners, bigger touch target */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
