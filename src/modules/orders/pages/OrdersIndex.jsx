@@ -3,18 +3,6 @@ import SupplierSelect from "../components/SupplierSelect";
 import ClientSelect from "../components/ClientSelect";
 import OrderCatalog from "../components/OrderCatalog";
 
-/**
- * Orders module — Copia Commissione
- *
- * Three-step flow:
- * 1. Select supplier (Fornitore)
- * 2. Select client (Cliente GDO)
- * 3. Fill order quantities in the product catalog
- *
- * State is local to this module. Each step transition
- * preserves the previous selection.
- */
-
 const STEPS = { SUPPLIER: 0, CLIENT: 1, CATALOG: 2 };
 
 export default function OrdersIndex() {

@@ -52,6 +52,7 @@ export default defineConfig({
       },
     }),
   ],
+  base: "/pwa/",
   server: {
     port: 5174,
     proxy: {
