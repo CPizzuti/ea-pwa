@@ -1,0 +1,79 @@
+import { useState, useCallback } from "react";
+import SupplierSelect from "../components/SupplierSelect";
+import PVSearch from "../components/PVSearch";
+import OrderCatalog from "../components/OrderCatalog";
+
+const STEPS = { SUPPLIER: 0, PV: 1, CATALOG: 2 };
+
+export default function OrdersIndex() {
+  const [step, setStep] = useState(STEPS.SUPPLIER);
+  const [supplier, setSupplier] = useState(null);
+  const [client, setClient] = useState(null); // now includes PV info
+
+  const handleSupplierSelect = useCallback((s) => {
+    setSupplier(s);
+    setStep(STEPS.PV);
+  }, []);
+
+  const handlePVSelect = useCallback((c) => {
+    setClient(c);
+    setStep(STEPS.CATALOG);
+  }, []);
+
+  const handleBack = useCallback(() => {
+    if (step === STEPS.PV) {
+      setClient(null);
+      setStep(STEPS.SUPPLIER);
+    } else if (step === STEPS.CATALOG) {
+      setClient(null);
+      setStep(STEPS.PV);
+    }
+  }, [step]);
+
+  const handleReset = useCallback(() => {
+    setSupplier(null);
+    setClient(null);
+    setStep(STEPS.SUPPLIER);
+  }, []);
+
+  return (
+    <div className="min-h-full">
+      {/* Step indicator */}
+      <div className="flex items-center justify-center gap-2 py-3">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className={`h-1.5 rounded-full transition-all ${
+              i === step
+                ? "w-6 bg-emerald-500"
+                : i < step
+                  ? "w-1.5 bg-emerald-500"
+                  : "w-1.5 bg-slate-300"
+            }`}
+          />
+        ))}
+      </div>
+
+      {step === STEPS.SUPPLIER && (
+        <SupplierSelect onSelect={handleSupplierSelect} />
+      )}
+
+      {step === STEPS.PV && (
+        <PVSearch
+          supplier={supplier}
+          onSelect={handlePVSelect}
+          onBack={handleBack}
+        />
+      )}
+
+      {step === STEPS.CATALOG && (
+        <OrderCatalog
+          supplier={supplier}
+          client={client}
+          onBack={handleBack}
+          onReset={handleReset}
+        />
+      )}
+    </div>
+  );
+}
